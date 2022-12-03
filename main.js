@@ -54,7 +54,6 @@ function zoom2(container, factor) {
   const pos = { x: 0, y: 0 };
   const zoom_target = { x: 0, y: 0 };
   const cursor = { x: 0, y: 0 };
-  const size = { x: 0, y: 0 };
   const containerComputed = container.getBoundingClientRect();
 
   slide.addEventListener("mousedown", mouseDown);
@@ -62,9 +61,6 @@ function zoom2(container, factor) {
   function mouseDown(e) {
     const slideComputed = slide.getBoundingClientRect();
     e.preventDefault();
-
-    size.x = slideComputed.x;
-    size.y = slideComputed.y;
 
     // Xác định vị trí con trỏ
     cursor.x = e.pageX - containerComputed.left;
@@ -92,12 +88,12 @@ function zoom2(container, factor) {
       pos.y = 0;
     }
 
-    if (size.x > 5 && zoomOut) {
+    if (slideComputed.x > 5 && zoomOut) {
       pos.x = 0;
       console.log("hi");
     }
 
-    if (size.y > 5 && zoomOut) {
+    if (slideComputed.y > 5 && zoomOut) {
       pos.y = 0;
       console.log("hello");
     }
