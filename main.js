@@ -51,19 +51,20 @@ function zoom(elm, scaleSeed) {
 function zoom2(container, factor) {
   let scale = 1;
   const slide = container.querySelector("#slide");
+  let slideComputed = slide.getBoundingClientRect();
   const pos = { x: 0, y: 0 };
   const zoom_target = { x: 0, y: 0 };
   const cursor = { x: 0, y: 0 };
   const containerComputed = container.getBoundingClientRect();
   const prevSlideComputed = slide.getBoundingClientRect();
-  // slide.addEventListener("mouseup", mouseDown);
-  slide.addEventListener("click", mouseDown);
-  function click() {
-    c("click");
+
+  slide.addEventListener("mouseup", mouseDown);
+  slide.addEventListener("mousedown", mouseUp);
+
+  function mouseUp() {
+    slideComputed = slide.getBoundingClientRect();
   }
   function mouseDown(e) {
-    c("mouseDown");
-    const slideComputed = slide.getBoundingClientRect();
     e.preventDefault();
 
     // Xác định vị trí con trỏ
