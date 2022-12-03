@@ -1,4 +1,4 @@
-const CONST_WRAPPER_WIDTH = 600;
+const CONST_WRAPPER_WIDTH = 400;
 const imgNaturalWidth = img.naturalWidth;
 const scaleFactorMax = imgNaturalWidth / CONST_WRAPPER_WIDTH;
 // zoom(document.querySelector("#slide"), 0.3);
@@ -55,10 +55,14 @@ function zoom2(container, factor) {
   const zoom_target = { x: 0, y: 0 };
   const cursor = { x: 0, y: 0 };
   const containerComputed = container.getBoundingClientRect();
-
-  slide.addEventListener("mousedown", mouseDown);
-
+  const prevSlideComputed = slide.getBoundingClientRect();
+  // slide.addEventListener("mouseup", mouseDown);
+  slide.addEventListener("click", mouseDown);
+  function click() {
+    c("click");
+  }
   function mouseDown(e) {
+    c("mouseDown");
     const slideComputed = slide.getBoundingClientRect();
     e.preventDefault();
 
@@ -83,22 +87,15 @@ function zoom2(container, factor) {
     pos.x = -zoom_target.x * scale + cursor.x;
     pos.y = -zoom_target.y * scale + cursor.y;
 
+    // Cho ảnh vào giữa khi zoom out
     if (scale === 1) {
       pos.x = 0;
       pos.y = 0;
     }
 
-    if (slideComputed.x > 5 && zoomOut) {
-      pos.x = 0;
-      console.log("hi");
-    }
+    if (slideComputed.x > prevSlideComputed.x && zoomOut) pos.x = 0;
 
-    if (slideComputed.y > 5 && zoomOut) {
-      pos.y = 0;
-      console.log("hello");
-    }
-
-    // Cho ảnh vào giữa khi zoom out
+    if (slideComputed.y > prevSlideComputed.y && zoomOut) pos.y = 0;
 
     slide.style.transform = `translate(${pos.x}px, ${pos.y}px) scale(${scale})`;
   }
